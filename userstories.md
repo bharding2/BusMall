@@ -26,6 +26,7 @@
 * As a developer, I want to display the percentage of times a product was clicked per times showed
 * As a developer, I want these results to display in decending order (stretch)
 * As a developer, I want the look and feel of the app to be consistent and accessible
+* As a developer, I want the images to appear roughly equal in size and aspect ratio on the page
 
 ---
 * As a focus group member, I want the process to be as easy as possible
