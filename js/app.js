@@ -107,3 +107,16 @@ function handleImgThreeClick(event) {
 
   displayThree();
 }
+
+resultButton.addEventListener('click', handleResultButtonClick)
+
+function handleResultButtonClick(event) {
+  var results = document.getElementById('results');
+  allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
+  for(var i = 0; i < allProducts.length; i++){
+    var pEl = document.createElement('p');
+    allProducts[i].percentClicked = allProducts[i].numClicks / allProducts[i].numDisplays * 100;
+    pEl.textContent = allProducts[i].productName + ' was clicked ' + allProducts[i].numClicks + ' times.  It was clicked ' + allProducts[i].percentClicked.toFixed(2) + '% of the times it was shown.';
+    results.appendChild(pEl);
+  }
+}
