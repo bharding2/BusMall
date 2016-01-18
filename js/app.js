@@ -109,15 +109,17 @@ function handleImgThreeClick(event) {
 }
 
 resultButton.addEventListener('click', handleResultButtonClick)
+var numResultButtonClicks = 0;
 
 function handleResultButtonClick(event) {
+  numResultButtonClicks += 1;
   var results = document.getElementById('results');
   while (results.firstChild) {
     results.removeChild(results.firstChild);
   }
 
   allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
-  
+
   for(var i = 0; i < allProducts.length; i++){
     var pEl = document.createElement('p');
     allProducts[i].percentClicked = allProducts[i].numClicks / allProducts[i].numDisplays * 100;
