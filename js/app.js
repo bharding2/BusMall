@@ -155,9 +155,10 @@ var data = {
 var resultsCanvas = document.getElementById('resultsCanvas').getContext('2d');
 var chartMe = new Chart(resultsCanvas).Bar(data);
 
-
 function handleResultButtonClick(event) {
   numResultButtonClicks += 1;
+  var results = document.getElementById('resultsSection');
+  results.removeAttribute('hidden');
 
   allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
 
