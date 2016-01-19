@@ -49,21 +49,18 @@ var imgThree = document.getElementById('imgThree');
 function displayThree() {
   productOneIndex = randomProduct();
   imgOne.setAttribute('src', allProducts[productOneIndex].filePath);
-  allProducts[productOneIndex].numDisplays += 1;
 
   productTwoIndex = randomProduct();
   while (productTwoIndex === productOneIndex)  {
     productTwoIndex = randomProduct();
   }
   imgTwo.setAttribute('src', allProducts[productTwoIndex].filePath);
-  allProducts[productTwoIndex].numDisplays += 1;
 
   productThreeIndex = randomProduct();
   while (productThreeIndex === productOneIndex || productThreeIndex === productTwoIndex) {
     productThreeIndex = randomProduct();
   }
   imgThree.setAttribute('src', allProducts[productThreeIndex].filePath);
-  allProducts[productThreeIndex].numDisplays += 1;
 
   console.log(productOneIndex);
   console.log(productTwoIndex);
@@ -91,6 +88,9 @@ imgOne.addEventListener('click', handleImgOneClick);
 
 function handleImgOneClick(event) {
   allProducts[productOneIndex].numClicks += 1;
+  allProducts[productOneIndex].numDisplays += 1;
+  allProducts[productTwoIndex].numDisplays += 1;
+  allProducts[productThreeIndex].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
@@ -105,6 +105,9 @@ imgTwo.addEventListener('click', handleImgTwoClick);
 
 function handleImgTwoClick(event) {
   allProducts[productTwoIndex].numClicks += 1;
+  allProducts[productOneIndex].numDisplays += 1;
+  allProducts[productTwoIndex].numDisplays += 1;
+  allProducts[productThreeIndex].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
@@ -119,6 +122,9 @@ imgThree.addEventListener('click', handleImgThreeClick);
 
 function handleImgThreeClick(event) {
   allProducts[productThreeIndex].numClicks += 1;
+  allProducts[productOneIndex].numDisplays += 1;
+  allProducts[productTwoIndex].numDisplays += 1;
+  allProducts[productThreeIndex].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
@@ -132,21 +138,44 @@ function handleImgThreeClick(event) {
 resultButton.addEventListener('click', handleResultButtonClick)
 var numResultButtonClicks = 0;
 
+
+
 function handleResultButtonClick(event) {
   numResultButtonClicks += 1;
-  var results = document.getElementById('results');
-  while (results.firstChild) {
-    results.removeChild(results.firstChild);
-  }
 
   allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
 
-  for(var i = 0; i < allProducts.length; i++){
-    var pEl = document.createElement('p');
-    allProducts[i].percentClicked = allProducts[i].numClicks / allProducts[i].numDisplays * 100;
-    pEl.textContent = allProducts[i].productName + ' was clicked ' + allProducts[i].numClicks + ' times.  It was clicked ' + allProducts[i].percentClicked.toFixed(2) + '% of the times it was shown.';
-    results.appendChild(pEl);
+  // for(var i = 0; i < allProducts.length; i++){
+  //   var pEl = document.createElement('p');
+  //   allProducts[i].percentClicked = allProducts[i].numClicks / allProducts[i].numDisplays * 100;
+  //   pEl.textContent = allProducts[i].productName + ' was clicked ' + allProducts[i].numClicks + ' times.  It was clicked ' + allProducts[i].percentClicked.toFixed(2) + '% of the times it was shown.';
+  //   results.appendChild(pEl);
+  // }
+  var data = {
+    labels: [],
+    datasets: [
+      {
+        label: 'Clicks per item',
+        fillColor: '#2E9329',
+        strokeColor: '#31732E',
+        highlightFill: '#1F6E6B',
+        hightlightStroke: '#225654',
+        data: []
+      }
+    ]
+  };
+  
+  var resultsCanvas = document.getElementById('resultsCanvas').getContext('2d');
+
+  for(var i = 0; i < allProducts.length; i++)
+  {
+    data.labels.push(allProducts[i].productName);
+    data.datasets[0].data.push(allProducts[i].numClicks);
   }
+  var chartMe = new Chart(resultsCanvas).Bar(data);
 
   allProducts.sort(function (a, b) {return a.originalIndex - b.originalIndex;});
+
+  // var result = document.getElementById('result')
+  // result.removeAttribute('hidden');
 }

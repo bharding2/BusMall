@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <title>BusMall Focus Group</title>
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <script src="js/Chart.min.js"></script>
   </head>
   <body>
     <header>
-      <h3>Instructions: For each set of three items, click on the item you are most likeley to purchase.</h3>
+      <h3>Instructions: For each set of three items, click on the item you are most likely to purchase.</h3>
     </header>
     <section class="container">
       <img id="imgOne" src="" />
@@ -15,8 +16,7 @@
       <img id="imgThree" src="" />
     </section>
     <button id="showResults" hidden="true">Show Results</button>
-    <section id="results">
-    </section>
+    <canvas id="resultsCanvas" width="900" height="450"></canvas>
     <script type="text/javascript" src="js/app.js"></script>
   </body>
 </html>
