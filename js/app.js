@@ -31,9 +31,13 @@ var usb = new Product('usb', 'img/usb.jpg');
 var watercan = new Product('watercan', 'img/watercan.jpg');
 var wineglass = new Product('wineglass', 'img/wineglass.jpg');
 
+// Is this necessary?
+
 function randomProduct() {
   return Math.floor(Math.random() * allProducts.length);
 }
+
+// make not global??? at least an array (would help dry out event handling)
 
 var productOneIndex = 0;
 var productTwoIndex = 0;
@@ -67,7 +71,21 @@ function displayThree() {
 }
 displayThree();
 
+// Make sure each image is displayed
+//
+// push choice into an array
+// while (choicesShown.length < allProducts.length) {
+//  if (image is in choices) {
+//  reroll
+//  }
+// }
+//
+// or just force the first five passes
+
 var resultButton = document.getElementById('showResults');
+
+
+// dry these guys out.  array of img with properties of one, two, three?
 
 imgOne.addEventListener('click', handleImgOneClick);
 
