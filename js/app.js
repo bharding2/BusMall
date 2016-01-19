@@ -2,6 +2,7 @@
 
 var allProducts = [];
 var totalClicks = 0;
+var originalIndex = 0;
 
 function Product(productName, filePath) {
   this.productName = productName;
@@ -9,6 +10,8 @@ function Product(productName, filePath) {
   this.numClicks = 0;
   this.numDisplays = 0;
   this.percentClicked = 0;
+  this.originalIndex = originalIndex;
+  originalIndex += 1;
 
   allProducts.push(this);
 }
@@ -126,4 +129,6 @@ function handleResultButtonClick(event) {
     pEl.textContent = allProducts[i].productName + ' was clicked ' + allProducts[i].numClicks + ' times.  It was clicked ' + allProducts[i].percentClicked.toFixed(2) + '% of the times it was shown.';
     results.appendChild(pEl);
   }
+
+  allProducts.sort(function (a, b) {return a.originalIndex - b.originalIndex;});
 }
