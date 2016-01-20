@@ -30,25 +30,25 @@ var allProducts = [
 ];
 
 var imageIndex = [];
-var imgOne = document.getElementById('0');
-var imgTwo = document.getElementById('1');
-var imgThree = document.getElementById('2');
+var img0 = document.getElementById('0');
+var img1 = document.getElementById('1');
+var img2 = document.getElementById('2');
 
 function displayThree() {
   imageIndex[0] = Math.floor(Math.random() * allProducts.length);
-  imgOne.setAttribute('src', allProducts[imageIndex[0]].filePath);
+  img0.setAttribute('src', allProducts[imageIndex[0]].filePath);
 
   imageIndex[1] = Math.floor(Math.random() * allProducts.length);
   while (imageIndex[1] === imageIndex[0])  {
     imageIndex[1] = Math.floor(Math.random() * allProducts.length);
   }
-  imgTwo.setAttribute('src', allProducts[imageIndex[1]].filePath);
+  img1.setAttribute('src', allProducts[imageIndex[1]].filePath);
 
   imageIndex[2] = Math.floor(Math.random() * allProducts.length);
   while (imageIndex[2] === imageIndex[0] || imageIndex[2] === imageIndex[1]) {
     imageIndex[2] = Math.floor(Math.random() * allProducts.length);
   }
-  imgThree.setAttribute('src', allProducts[imageIndex[2]].filePath);
+  img2.setAttribute('src', allProducts[imageIndex[2]].filePath);
 
   console.log(imageIndex[0]);
   console.log(imageIndex[1]);
@@ -67,9 +67,9 @@ displayThree();
 //
 // or just force the first five passes
 
-imgOne.addEventListener('click', handleImgClick);
-imgTwo.addEventListener('click', handleImgClick);
-imgThree.addEventListener('click', handleImgClick);
+img0.addEventListener('click', handleImgClick);
+img1.addEventListener('click', handleImgClick);
+img2.addEventListener('click', handleImgClick);
 
 function handleImgClick(event) {
   allProducts[imageIndex[+event.path[0].id]].numClicks += 1;
