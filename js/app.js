@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var originalIndex = 0;
 
@@ -126,13 +126,13 @@ function handleResultButtonClick(event) {
   results.removeAttribute('hidden');
 
   allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
-    for(var i = 0; i < allProducts.length; i++)
-    {
-      data.labels[i] = allProducts[i].productName;
-      chartMe.datasets[0].bars[i].label = 'Clicked ' + parseInt(allProducts[i].numClicks/allProducts[i].numDisplays*100) + '%';
-      chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
-      chartMe.datasets[1].bars[i].value = allProducts[i].numDisplays;
-    }
-    chartMe.update();
+  for(var i = 0; i < allProducts.length; i++)
+  {
+    data.labels[i] = allProducts[i].productName;
+    chartMe.datasets[0].bars[i].label = 'Clicked ' + parseInt(allProducts[i].numClicks/allProducts[i].numDisplays*100) + '%';
+    chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
+    chartMe.datasets[1].bars[i].value = allProducts[i].numDisplays;
+  }
+  chartMe.update();
   allProducts.sort(function (a, b) {return a.originalIndex - b.originalIndex;});
 }
