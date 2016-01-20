@@ -130,27 +130,39 @@ var data = {
   labels: [],
   datasets: [
     {
-      label: 'Clicks per item',
+      label: 'Times clicked per item',
       fillColor: '#2E9329',
       strokeColor: '#31732E',
-      highlightFill: '#1F6E6B',
-      hightlightStroke: '#225654',
+      highlightFill:'#72C56E',
+      hightlightStroke: '#31732E',
+      data: []
+    },
+    {
+      label: 'Times Displayed per item',
+      fillColor: '#EDF3F2',
+      strokeColor: '#B3CFCE',
+      highlightFill: '#F5FAF4',
+      hightlightStroke: '#B3CFCE',
       data: []
     }
   ]
 };
 
-for (var j = 0; j < allProducts.length; j++) {
-  data.labels.push('0');
-  data.datasets[0].data.push('0');
+function resetChartData() {
+  for (var j = 0; j < allProducts.length; j++) {
+    data.labels.push('0');
+    data.datasets[0].data.push('0');
+    data.datasets[1].data.push('0');
+  }
 }
+resetChartData();
 
 var resultsCanvas = document.getElementById('resultsCanvas').getContext('2d');
 var chartMe = new Chart(resultsCanvas).Bar(data);
 
 var resultButton = document.getElementById('showResults');
 var numResultButtonClicks = 0;
-resultButton.addEventListener('click', handleResultButtonClick)
+resultButton.addEventListener('click', handleResultButtonClick);
 
 function handleResultButtonClick(event) {
   numResultButtonClicks += 1;
@@ -163,7 +175,8 @@ function handleResultButtonClick(event) {
   {
     data.labels[i] = allProducts[i].productName;
     chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
-    chartMe.datasets[0].bars[i].label = allProducts[i].productName;
+    chartMe.datasets[0].bars[i].label = 'Clicked/Displayed';
+    chartMe.datasets[1].bars[i].value = allProducts[i].numDisplays;
   }
   chartMe.update();
 
