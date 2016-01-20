@@ -7,7 +7,6 @@ function Product(productName, filePath) {
   this.filePath = filePath;
   this.numClicks = 0;
   this.numDisplays = 0;
-  this.percentClicked = 0;
   this.originalIndex = originalIndex++;
 }
 
@@ -29,23 +28,34 @@ var allProducts = [
 ];
 
 var imageIndex = [];
+var choicesShown = [];
 var img0 = document.getElementById('0');
 var img1 = document.getElementById('1');
 var img2 = document.getElementById('2');
 
+function createRandom() {
+  var index = Math.floor(Math.random() * allProducts.length);
+  if (choicesShown.indexOf(index) > 0) {
+    index = Math.floor(Math.random() * allProducts.length);
+  } else {
+    choicesShown.push(index);
+  }
+  return index;
+}
+
 function displayThree() {
-  imageIndex[0] = Math.floor(Math.random() * allProducts.length);
+  imageIndex[0] = createRandom();
   img0.setAttribute('src', allProducts[imageIndex[0]].filePath);
 
-  imageIndex[1] = Math.floor(Math.random() * allProducts.length);
+  imageIndex[1] = createRandom();
   while (imageIndex[1] === imageIndex[0])  {
-    imageIndex[1] = Math.floor(Math.random() * allProducts.length);
+    imageIndex[1] = createRandom();
   }
   img1.setAttribute('src', allProducts[imageIndex[1]].filePath);
 
-  imageIndex[2] = Math.floor(Math.random() * allProducts.length);
+  imageIndex[2] = createRandom();
   while (imageIndex[2] === imageIndex[0] || imageIndex[2] === imageIndex[1]) {
-    imageIndex[2] = Math.floor(Math.random() * allProducts.length);
+    imageIndex[2] = createRandom();
   }
   img2.setAttribute('src', allProducts[imageIndex[2]].filePath);
 
@@ -55,21 +65,9 @@ function displayThree() {
 }
 displayThree();
 
-// Make sure each image is displayed
-//
-// push choice into an array
-// while (choicesShown.length < allProducts.length) {
-//  if (image is in choices) {
-//  reroll
-//  }
-// }
-//
-// or just force the first five passes
-
 img0.addEventListener('click', handleImgClick);
 img1.addEventListener('click', handleImgClick);
 img2.addEventListener('click', handleImgClick);
-
 var totalClicks = 0;
 
 function handleImgClick(event) {
@@ -128,15 +126,13 @@ function handleResultButtonClick(event) {
   results.removeAttribute('hidden');
 
   allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
-
-  for(var i = 0; i < allProducts.length; i++)
-  {
-    data.labels[i] = allProducts[i].productName;
-    chartMe.datasets[0].bars[i].label = 'Clicked/Displayed';
-    chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
-    chartMe.datasets[1].bars[i].value = allProducts[i].numDisplays;
-  }
-  chartMe.update();
-
+    for(var i = 0; i < allProducts.length; i++)
+    {
+      data.labels[i] = allProducts[i].productName;
+      chartMe.datasets[0].bars[i].label = 'Clicked ' + parseInt(allProducts[i].numClicks/allProducts[i].numDisplays*100) + '%';
+      chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
+      chartMe.datasets[1].bars[i].value = allProducts[i].numDisplays;
+    }
+    chartMe.update();
   allProducts.sort(function (a, b) {return a.originalIndex - b.originalIndex;});
 }
