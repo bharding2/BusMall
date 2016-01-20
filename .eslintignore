@@ -1,0 +1,12 @@
+README.md
+userstories.md
+**.html
+**.css
+.gitignore
+css/**
+img/**
+js/Chart.min.js
+.DS_Store
+.eslintrc
+.eslintignore
+.git/**
