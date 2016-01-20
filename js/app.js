@@ -31,12 +31,6 @@ var usb = new Product('usb', 'img/usb.jpg');
 var watercan = new Product('watercan', 'img/watercan.jpg');
 var wineglass = new Product('wineglass', 'img/wineglass.jpg');
 
-// Is this necessary?
-
-function randomProduct() {
-  return Math.floor(Math.random() * allProducts.length);
-}
-
 // make not global??? at least an array (would help dry out event handling)
 
 var productOneIndex = 0;
@@ -47,18 +41,18 @@ var imgTwo = document.getElementById('imgTwo');
 var imgThree = document.getElementById('imgThree');
 
 function displayThree() {
-  productOneIndex = randomProduct();
+  productOneIndex = Math.floor(Math.random() * allProducts.length);
   imgOne.setAttribute('src', allProducts[productOneIndex].filePath);
 
-  productTwoIndex = randomProduct();
+  productTwoIndex = Math.floor(Math.random() * allProducts.length);
   while (productTwoIndex === productOneIndex)  {
-    productTwoIndex = randomProduct();
+    productTwoIndex = Math.floor(Math.random() * allProducts.length);
   }
   imgTwo.setAttribute('src', allProducts[productTwoIndex].filePath);
 
-  productThreeIndex = randomProduct();
+  productThreeIndex = Math.floor(Math.random() * allProducts.length);
   while (productThreeIndex === productOneIndex || productThreeIndex === productTwoIndex) {
-    productThreeIndex = randomProduct();
+    productThreeIndex = Math.floor(Math.random() * allProducts.length);
   }
   imgThree.setAttribute('src', allProducts[productThreeIndex].filePath);
 
@@ -78,9 +72,6 @@ displayThree();
 // }
 //
 // or just force the first five passes
-
-var resultButton = document.getElementById('showResults');
-
 
 // dry these guys out.  array of img with properties of one, two, three?
 
@@ -135,11 +126,8 @@ function handleImgThreeClick(event) {
   displayThree();
 }
 
-resultButton.addEventListener('click', handleResultButtonClick)
-var numResultButtonClicks = 0;
-
 var data = {
-  labels: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  labels: [],
   datasets: [
     {
       label: 'Clicks per item',
@@ -147,13 +135,22 @@ var data = {
       strokeColor: '#31732E',
       highlightFill: '#1F6E6B',
       hightlightStroke: '#225654',
-      data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      data: []
     }
   ]
 };
 
+for (var j = 0; j < allProducts.length; j++) {
+  data.labels.push('0');
+  data.datasets[0].data.push('0');
+}
+
 var resultsCanvas = document.getElementById('resultsCanvas').getContext('2d');
 var chartMe = new Chart(resultsCanvas).Bar(data);
+
+var resultButton = document.getElementById('showResults');
+var numResultButtonClicks = 0;
+resultButton.addEventListener('click', handleResultButtonClick)
 
 function handleResultButtonClick(event) {
   numResultButtonClicks += 1;
