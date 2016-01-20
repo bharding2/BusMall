@@ -31,9 +31,7 @@ var usb = new Product('usb', 'img/usb.jpg');
 var watercan = new Product('watercan', 'img/watercan.jpg');
 var wineglass = new Product('wineglass', 'img/wineglass.jpg');
 
-function randomProduct() {
-  return Math.floor(Math.random() * allProducts.length);
-}
+// make not global??? at least an array (would help dry out event handling)
 
 var productOneIndex = 0;
 var productTwoIndex = 0;
@@ -43,23 +41,20 @@ var imgTwo = document.getElementById('imgTwo');
 var imgThree = document.getElementById('imgThree');
 
 function displayThree() {
-  productOneIndex = randomProduct();
+  productOneIndex = Math.floor(Math.random() * allProducts.length);
   imgOne.setAttribute('src', allProducts[productOneIndex].filePath);
-  allProducts[productOneIndex].numDisplays += 1;
 
-  productTwoIndex = randomProduct();
+  productTwoIndex = Math.floor(Math.random() * allProducts.length);
   while (productTwoIndex === productOneIndex)  {
-    productTwoIndex = randomProduct();
+    productTwoIndex = Math.floor(Math.random() * allProducts.length);
   }
   imgTwo.setAttribute('src', allProducts[productTwoIndex].filePath);
-  allProducts[productTwoIndex].numDisplays += 1;
 
-  productThreeIndex = randomProduct();
+  productThreeIndex = Math.floor(Math.random() * allProducts.length);
   while (productThreeIndex === productOneIndex || productThreeIndex === productTwoIndex) {
-    productThreeIndex = randomProduct();
+    productThreeIndex = Math.floor(Math.random() * allProducts.length);
   }
   imgThree.setAttribute('src', allProducts[productThreeIndex].filePath);
-  allProducts[productThreeIndex].numDisplays += 1;
 
   console.log(productOneIndex);
   console.log(productTwoIndex);
@@ -67,12 +62,26 @@ function displayThree() {
 }
 displayThree();
 
-var resultButton = document.getElementById('showResults');
+// Make sure each image is displayed
+//
+// push choice into an array
+// while (choicesShown.length < allProducts.length) {
+//  if (image is in choices) {
+//  reroll
+//  }
+// }
+//
+// or just force the first five passes
+
+// dry these guys out.  array of img with properties of one, two, three?
 
 imgOne.addEventListener('click', handleImgOneClick);
 
 function handleImgOneClick(event) {
   allProducts[productOneIndex].numClicks += 1;
+  allProducts[productOneIndex].numDisplays += 1;
+  allProducts[productTwoIndex].numDisplays += 1;
+  allProducts[productThreeIndex].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
@@ -87,6 +96,9 @@ imgTwo.addEventListener('click', handleImgTwoClick);
 
 function handleImgTwoClick(event) {
   allProducts[productTwoIndex].numClicks += 1;
+  allProducts[productOneIndex].numDisplays += 1;
+  allProducts[productTwoIndex].numDisplays += 1;
+  allProducts[productThreeIndex].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
@@ -101,6 +113,9 @@ imgThree.addEventListener('click', handleImgThreeClick);
 
 function handleImgThreeClick(event) {
   allProducts[productThreeIndex].numClicks += 1;
+  allProducts[productOneIndex].numDisplays += 1;
+  allProducts[productTwoIndex].numDisplays += 1;
+  allProducts[productThreeIndex].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
@@ -111,24 +126,45 @@ function handleImgThreeClick(event) {
   displayThree();
 }
 
-resultButton.addEventListener('click', handleResultButtonClick)
+var data = {
+  labels: [],
+  datasets: [
+    {
+      label: 'Clicks per item',
+      fillColor: '#2E9329',
+      strokeColor: '#31732E',
+      highlightFill: '#1F6E6B',
+      hightlightStroke: '#225654',
+      data: []
+    }
+  ]
+};
+
+for (var j = 0; j < allProducts.length; j++) {
+  data.labels.push('0');
+  data.datasets[0].data.push('0');
+}
+
+var resultsCanvas = document.getElementById('resultsCanvas').getContext('2d');
+var chartMe = new Chart(resultsCanvas).Bar(data);
+
+var resultButton = document.getElementById('showResults');
 var numResultButtonClicks = 0;
+resultButton.addEventListener('click', handleResultButtonClick)
 
 function handleResultButtonClick(event) {
   numResultButtonClicks += 1;
-  var results = document.getElementById('results');
-  while (results.firstChild) {
-    results.removeChild(results.firstChild);
-  }
+  var results = document.getElementById('resultsSection');
+  results.removeAttribute('hidden');
 
   allProducts.sort(function (a, b) {return b.numClicks - a.numClicks;});
 
-  for(var i = 0; i < allProducts.length; i++){
-    var pEl = document.createElement('p');
-    allProducts[i].percentClicked = allProducts[i].numClicks / allProducts[i].numDisplays * 100;
-    pEl.textContent = allProducts[i].productName + ' was clicked ' + allProducts[i].numClicks + ' times.  It was clicked ' + allProducts[i].percentClicked.toFixed(2) + '% of the times it was shown.';
-    results.appendChild(pEl);
+  for(var i = 0; i < allProducts.length; i++)
+  {
+    data.labels[i] = allProducts[i].productName;
+    chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
   }
+  chartMe.update();
 
   allProducts.sort(function (a, b) {return a.originalIndex - b.originalIndex;});
 }
