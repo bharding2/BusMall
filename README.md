@@ -9,3 +9,7 @@
 * Flexboxxed styles.css
 * Built intial js functionality to display three random images, handle clicks on all three images, and log votes
 * Built temporary results after 15 clicks sorted in descending order
+
+###Jan19
+* Built a chart using chart.js to display results
+* Got the chart to update with new values (almost killed me)

@@ -11,6 +11,7 @@
 * As a market researcher, I want to log the number of times an image was shown to find the percentage of times a product was clicked per times shown
 * As a market researcher, I want to know whether the focus group member chose to see the results
 * As a market researcher, I want the process to be as clear and easy as possible so the study returns data that is as accurate as possible
+* As a market researcher, I want the results to display in a bar graph
 * As a market researcher, I want the app to look and feel accessible
 
 ---
@@ -23,6 +24,7 @@
 * As a developer, I want to repeat this process 15 times, and then display a button to show the results
 * As a developer, I want the button to be hidden until the focus group member clicks 15 times
 * As a developer, I want to display the number of times each image was clicked when the focus group member clicks the show results button
+* As a developer, I want to display the results in a bar graph using chart.js
 * As a developer, I want to display the percentage of times a product was clicked per times showed
 * As a developer, I want these results to display in decending order (stretch)
 * As a developer, I want the look and feel of the app to be consistent and accessible
