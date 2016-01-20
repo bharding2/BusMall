@@ -7,7 +7,6 @@ function Product(productName, filePath) {
   this.filePath = filePath;
   this.numClicks = 0;
   this.numDisplays = 0;
-  this.percentClicked = 0;
   this.originalIndex = originalIndex++;
 }
 
@@ -130,7 +129,7 @@ function handleResultButtonClick(event) {
     for(var i = 0; i < allProducts.length; i++)
     {
       data.labels[i] = allProducts[i].productName;
-      chartMe.datasets[0].bars[i].label = 'Clicked/Displayed';
+      chartMe.datasets[0].bars[i].label = 'Clicked ' + parseInt(allProducts[i].numClicks/allProducts[i].numDisplays*100) + '%';
       chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
       chartMe.datasets[1].bars[i].value = allProducts[i].numDisplays;
     }
