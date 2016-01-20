@@ -163,6 +163,7 @@ function handleResultButtonClick(event) {
   {
     data.labels[i] = allProducts[i].productName;
     chartMe.datasets[0].bars[i].value = allProducts[i].numClicks;
+    chartMe.datasets[0].bars[i].label = allProducts[i].productName;
   }
   chartMe.update();
 
