@@ -1,6 +1,5 @@
 "use strict";
 
-var totalClicks = 0;
 var originalIndex = 0;
 
 function Product(productName, filePath) {
@@ -70,6 +69,8 @@ displayThree();
 img0.addEventListener('click', handleImgClick);
 img1.addEventListener('click', handleImgClick);
 img2.addEventListener('click', handleImgClick);
+
+var totalClicks = 0;
 
 function handleImgClick(event) {
   allProducts[imageIndex[+event.path[0].id]].numClicks += 1;
