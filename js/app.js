@@ -10,41 +10,27 @@ function Product(productName, filePath) {
   this.originalIndex = originalIndex++;
 }
 
-var allProducts = [
-  new Product('bag', 'img/bag.jpg'),
-  new Product('banana', 'img/banana.jpg'),
-  new Product('boots', 'img/boots.jpg'),
-  new Product('chair', 'img/chair.jpg'),
-  new Product('cthulhu', 'img/cthulhu.jpg'),
-  new Product('dragon', 'img/dragon.jpg'),
-  new Product('pen', 'img/pen.jpg'),
-  new Product('scissors', 'img/scissors.jpg'),
-  new Product('shark', 'img/shark.jpg'),
-  new Product('sweep', 'img/sweep.jpg'),
-  new Product('unicorn', 'img/unicorn.jpg'),
-  new Product('usb', 'img/usb.jpg'),
-  new Product('watercan', 'img/watercan.jpg'),
-  new Product('wineglass', 'img/wineglass.jpg')
-];
+var allProducts = JSON.parse(localStorage.getItem('allProducts'));
 
-function initializeLocalStorage() {
-  for (var i = 0; i < allProducts.length; i++) {
-    var numClicksToTest = localStorage.getItem(allProducts[i].productName + 'NumClicks');
-    if (numClicksToTest) {
-      allProducts[i].numClicks = parseInt(numClicksToTest);
-    } else {
-      localStorage.setItem(allProducts[i].productName + 'NumClicks', allProducts[i].numClicks);
-    }
-
-    var numDisplaysToTest = localStorage.getItem(allProducts[i].productName + 'NumDisplays');
-    if (numDisplaysToTest) {
-      allProducts[i].numDisplays = parseInt(numDisplaysToTest);
-    } else {
-      localStorage.setItem(allProducts[i].productName + 'NumDisplays', allProducts[i].numDisplays);
-    }
-  }
+if (!allProducts) {
+  allProducts = [
+    new Product('bag', 'img/bag.jpg'),
+    new Product('banana', 'img/banana.jpg'),
+    new Product('boots', 'img/boots.jpg'),
+    new Product('chair', 'img/chair.jpg'),
+    new Product('cthulhu', 'img/cthulhu.jpg'),
+    new Product('dragon', 'img/dragon.jpg'),
+    new Product('pen', 'img/pen.jpg'),
+    new Product('scissors', 'img/scissors.jpg'),
+    new Product('shark', 'img/shark.jpg'),
+    new Product('sweep', 'img/sweep.jpg'),
+    new Product('unicorn', 'img/unicorn.jpg'),
+    new Product('usb', 'img/usb.jpg'),
+    new Product('watercan', 'img/watercan.jpg'),
+    new Product('wineglass', 'img/wineglass.jpg')
+  ];
+  localStorage.setItem('allProducts', JSON.stringify(allProducts));
 }
-initializeLocalStorage();
 
 var imageIndex = [];
 var choicesShown = [];
@@ -91,13 +77,10 @@ var totalClicks = 0;
 
 function handleImgClick(event) {
   allProducts[imageIndex[+event.target.id]].numClicks += 1;
-  localStorage.setItem(allProducts[imageIndex[+event.target.id]].productName + 'NumClicks', allProducts[imageIndex[+event.target.id]].numClicks);
   allProducts[imageIndex[0]].numDisplays += 1;
-  localStorage.setItem(allProducts[imageIndex[0]].productName + 'NumDisplays', allProducts[imageIndex[0]].numDisplays);
   allProducts[imageIndex[1]].numDisplays += 1;
-  localStorage.setItem(allProducts[imageIndex[1]].productName + 'NumDisplays', allProducts[imageIndex[1]].numDisplays);
   allProducts[imageIndex[2]].numDisplays += 1;
-  localStorage.setItem(allProducts[imageIndex[2]].productName + 'NumDisplays', allProducts[imageIndex[2]].numDisplays);
+  localStorage.setItem('allProducts', JSON.stringify(allProducts));
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
