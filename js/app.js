@@ -48,33 +48,24 @@ function handleImgClick(event) {
   allProducts[imageIndex[2]].numDisplays += 1;
   totalClicks += 1;
   if (totalClicks === 15) {
-    resultButton.removeAttribute('hidden');
+    document.getElementById('showResults').removeAttribute('hidden');
   }
   displayThree();
 }
 var data = {
-  labels: [],
+  labels: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   datasets: [{
     label: 'Times clicked per item',
     fillColor: '#2E9329',
     strokeColor: '#31732E',
     highlightFill:'#72C56E',
     hightlightStroke: '#31732E',
-    data: []
-  },]};
-function resetChartData() {
-  for (var j = 0; j < allProducts.length; j++) {
-    data.labels.push('0');
-    data.datasets[0].data.push('0');
-  }
-}
-resetChartData();
+    data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  }]};
 var chartMe = new Chart(document.getElementById('resultsCanvas').getContext('2d')).Bar(data);
-var resultButton = document.getElementById('showResults');
-resultButton.addEventListener('click', handleResultButtonClick);
+document.getElementById('showResults').addEventListener('click', handleResultButtonClick);
 function handleResultButtonClick(event) {
-  var results = document.getElementById('resultsSection');
-  results.removeAttribute('hidden');
+  document.getElementById('resultsSection').removeAttribute('hidden');
   for(var i = 0; i < allProducts.length; i++)
   {
     data.labels[i] = allProducts[i].productName;
