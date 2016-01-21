@@ -6,20 +6,13 @@ function Product(productName, filePath) {
   this.numDisplays = 0;
 }
 var allProducts = [
-  new Product('bag', 'img/bag.jpg'),
-  new Product('banana', 'img/banana.jpg'),
-  new Product('boots', 'img/boots.jpg'),
-  new Product('chair', 'img/chair.jpg'),
-  new Product('cthulhu', 'img/cthulhu.jpg'),
-  new Product('dragon', 'img/dragon.jpg'),
-  new Product('pen', 'img/pen.jpg'),
-  new Product('scissors', 'img/scissors.jpg'),
-  new Product('shark', 'img/shark.jpg'),
-  new Product('sweep', 'img/sweep.jpg'),
-  new Product('unicorn', 'img/unicorn.jpg'),
-  new Product('usb', 'img/usb.jpg'),
-  new Product('watercan', 'img/watercan.jpg'),
-  new Product('wineglass', 'img/wineglass.jpg')
+  new Product('bag', 'img/bag.jpg'), new Product('banana', 'img/banana.jpg'),
+  new Product('boots', 'img/boots.jpg'), new Product('chair', 'img/chair.jpg'),
+  new Product('cthulhu', 'img/cthulhu.jpg'), new Product('dragon', 'img/dragon.jpg'),
+  new Product('pen', 'img/pen.jpg'), new Product('scissors', 'img/scissors.jpg'),
+  new Product('shark', 'img/shark.jpg'), new Product('sweep', 'img/sweep.jpg'),
+  new Product('unicorn', 'img/unicorn.jpg'), new Product('usb', 'img/usb.jpg'),
+  new Product('watercan', 'img/watercan.jpg'),  new Product('wineglass', 'img/wineglass.jpg')
 ];
 var imageIndex = [];
 function displayThree() {
@@ -56,10 +49,8 @@ var data = {
   labels: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   datasets: [{
     label: 'Times clicked per item',
-    fillColor: '#2E9329',
-    strokeColor: '#31732E',
-    highlightFill:'#72C56E',
-    hightlightStroke: '#31732E',
+    fillColor: '#2E9329', strokeColor: '#31732E',
+    highlightFill:'#72C56E', hightlightStroke: '#31732E',
     data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   }]};
 var chartMe = new Chart(document.getElementById('resultsCanvas').getContext('2d')).Bar(data);
