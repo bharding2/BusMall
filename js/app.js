@@ -27,6 +27,25 @@ var allProducts = [
   new Product('wineglass', 'img/wineglass.jpg')
 ];
 
+function initializeLocalStorage() {
+  for (var i = 0; i < allProducts.length; i++) {
+    var numClicksToTest = localStorage.getItem(allProducts[i].productName + 'NumClicks');
+    if (numClicksToTest) {
+      allProducts[i].numClicks = parseInt(numClicksToTest);
+    } else {
+      localStorage.setItem(allProducts[i].productName + 'NumClicks', allProducts[i].numClicks);
+    }
+
+    var numDisplaysToTest = localStorage.getItem(allProducts[i].productName + 'NumDisplays');
+    if (numDisplaysToTest) {
+      allProducts[i].numDisplays = parseInt(numDisplaysToTest);
+    } else {
+      localStorage.setItem(allProducts[i].productName + 'NumDisplays', allProducts[i].numDisplays);
+    }
+  }
+}
+initializeLocalStorage();
+
 var imageIndex = [];
 var choicesShown = [];
 var img0 = document.getElementById('0');
@@ -72,15 +91,27 @@ var totalClicks = 0;
 
 function handleImgClick(event) {
   allProducts[imageIndex[+event.target.id]].numClicks += 1;
+  localStorage.setItem(allProducts[imageIndex[+event.target.id]].productName + 'NumClicks', allProducts[imageIndex[+event.target.id]].numClicks);
   allProducts[imageIndex[0]].numDisplays += 1;
+  localStorage.setItem(allProducts[imageIndex[0]].productName + 'NumDisplays', allProducts[imageIndex[0]].numDisplays);
   allProducts[imageIndex[1]].numDisplays += 1;
+  localStorage.setItem(allProducts[imageIndex[1]].productName + 'NumDisplays', allProducts[imageIndex[1]].numDisplays);
   allProducts[imageIndex[2]].numDisplays += 1;
+  localStorage.setItem(allProducts[imageIndex[2]].productName + 'NumDisplays', allProducts[imageIndex[2]].numDisplays);
   totalClicks += 1;
   if (totalClicks === 15) {
     resultButton.removeAttribute('hidden');
   }
   displayThree();
 }
+
+var clearLSButton = document.getElementById('clearLS');
+clearLSButton.addEventListener('click', handleClearLS);
+
+function handleClearLS() {
+  localStorage.clear();
+}
+
 //chart data
 var data = {
   labels: [],
@@ -114,7 +145,7 @@ function resetChartData() {
 resetChartData();
 
 var resultsCanvas = document.getElementById('resultsCanvas').getContext('2d');
-var chartMe = new Chart(resultsCanvas).Bar(data);
+var chartMe = new Chart(resultsCanvas).Bar(data); //eslint-disable-line
 
 var resultButton = document.getElementById('showResults');
 var numResultButtonClicks = 0;
