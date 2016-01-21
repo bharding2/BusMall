@@ -71,7 +71,7 @@ img2.addEventListener('click', handleImgClick);
 var totalClicks = 0;
 
 function handleImgClick(event) {
-  allProducts[imageIndex[+event.path[0].id]].numClicks += 1;
+  allProducts[imageIndex[+event.target.id]].numClicks += 1;
   allProducts[imageIndex[0]].numDisplays += 1;
   allProducts[imageIndex[1]].numDisplays += 1;
   allProducts[imageIndex[2]].numDisplays += 1;
