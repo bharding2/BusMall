@@ -1,6 +1,26 @@
+body {
+  background-color: #BCC5D6;
+}
+
+header {
+  text-align: center;
+  color: #2C3A56;
+}
+
 .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+img {
+  border: 5px double #878C97;
 }
