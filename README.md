@@ -20,3 +20,11 @@
 * Initial foray into ensuring each product is shown at least once in the first 15 sets of images
 * Lintered project
 * Updated the info in the hovered portion of the chart to display the percentage of times displayed a product was clicked
+
+###Jan21
+* Susan Harrison driving: created localStorage solution
+* Ben driving after this: adjusted localStorage solution to store entire array of objects using JSON
+
+###Jan22
+* CSS work
+* Logo! Bus art from sweetclipart.com
