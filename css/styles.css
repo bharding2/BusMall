@@ -8,6 +8,10 @@ header {
   color: #2C3A56;
 }
 
+header img {
+  border: none;
+}
+
 h2 {
   font-weight: bolder;
   text-decoration: underline;
